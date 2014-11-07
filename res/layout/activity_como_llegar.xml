@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ComoLlegar" >
+
+   	<ImageButton
+        android:id="@+id/comoLlegarBackBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_topbar"
+        android:background="@null" />
+
+    <ImageView
+        android:id="@+id/comoLlegarTopBarImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/comoLlegarBackBtn"
+        android:background="@null"
+        android:src="@drawable/img_topbar_others" />
+    
+    <fragment
+        android:id="@+id/comoLlegarMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/comoLlegarTopBarImage"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+    
+   
+    
+</RelativeLayout>

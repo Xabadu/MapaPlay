@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/musicDetailCellCoverImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/batman" />
+
+    <ImageView
+        android:id="@+id/musicDetailCellSeparatorImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/img_comments_separator" />
+
+    <TextView
+        android:id="@+id/musicDetailCellArtistText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/musicDetailCellCoverImage"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/musicDetailCellCoverImage"
+        android:text="TextView"
+        android:textColor="#2d2d2d"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/musicDetailCellLinkText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/musicDetailCellCoverImage"
+        android:layout_alignLeft="@+id/musicDetailCellArtistText"
+        android:layout_marginBottom="5dp"
+        android:text="Escucha y descárgalo" />
+
+</RelativeLayout>

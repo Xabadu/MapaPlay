@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panoramaDetailCellLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/panoramaDetailCellImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/batman" />
+
+    <TextView
+        android:id="@+id/panoramaDetailCellTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/panoramaDetailCellImage"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/estadosTopBarImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/panoramaDetailCellTitle"
+        android:src="@drawable/img_comment_bubble" />
+
+    <TextView
+        android:id="@+id/panoramaDetailCellCommentsNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/estadosTopBarImage"
+        android:layout_alignTop="@+id/estadosTopBarImage"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="2dp"
+        android:text="24"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/panoramaDetailCellAddressImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/panoramaDetailCellTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/panoramaDetailCellImage"
+        android:src="@drawable/img_location_icon" />
+
+    <TextView
+        android:id="@+id/panoramaDetailCellAddressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/panoramaDetailCellTitle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="1dp"
+        android:layout_toRightOf="@id/panoramaDetailCellAddressImage"
+        android:text="TextView"
+        android:textColor="#ababab"
+        android:textSize="13sp" />
+
+    <RelativeLayout
+        android:id="@+id/panoramaDetailCellBottomLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/panoramaDetailCellImage"
+        android:paddingBottom="20dp" >
+
+        <ImageView
+            android:id="@+id/panoramaDetailPriceBgImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/panoramaDetailCellDescriptionText"
+            android:src="@drawable/img_panorama_value" />
+
+        <TextView
+            android:id="@+id/panoramaDetailCellDescriptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/panoramaDetailPriceBgImage"
+            android:text="Parque Arauco S.A es una empresa inmobiliaria, centrada principalmente en la explotación de centros comerciales. Originaria de Santiago de Chile."
+            android:textColor="#2d2d2d" />
+
+        <TextView
+            android:id="@+id/panoramaDetailCellPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/panoramaDetailPriceBgImage"
+            android:layout_marginTop="2dp"
+            android:text="Gratis"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/panoramaDetailCellSeparatorImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:src="@drawable/img_separator" />
+
+</RelativeLayout>

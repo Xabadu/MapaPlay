@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PanoramaDetail" >
+
+    <ImageButton
+        android:id="@+id/panoramaDetailBackBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@null"
+        android:src="@drawable/button_topbar" />
+
+    <ImageView
+        android:id="@+id/panoramaDetailTopBarImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/panoramaDetailBackBtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/panoramaDetailBackBtn"
+        android:src="@drawable/img_topbar_others" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/panoramaDetailBackBtn"
+        android:orientation="vertical" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/panoramaDetailPicturesViewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </android.support.v4.view.ViewPager>
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/panoramaDetailCircleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/panoramaDetailPicturesViewPager"
+            android:layout_alignParentRight="true"
+            android:padding="10dip" />
+
+        <TextView
+            android:id="@+id/panoramaDetailHoursText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/panoramaDetailTitleText"
+            android:layout_marginLeft="10dp"
+            android:text="LUNES A DOMINGO - 18:00 A 23 HORAS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#2d2d2d" />
+
+        <TextView
+            android:id="@+id/panoramaDetailTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="Teleférico San Cristóbal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff"
+            android:textSize="28sp" />
+
+        <ImageView
+            android:id="@+id/panoramaDetailValueImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/img_value_detail" />
+
+        <TextView
+            android:id="@+id/panoramaDetailValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF" />
+
+        <RatingBar
+            android:id="@+id/panoramaDetailRatingBar"
+            style="@style/RatingBarAppTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panoramaDetailHoursText"
+            android:layout_marginLeft="10dp"
+            android:max="5"
+            android:numStars="5"
+            android:stepSize="1.0" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:id="@+id/panoramaDetailDescriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Do you think he wont do me a turn, when itpos to help himself in the end, shipmate and going to the mate, he looked at him quietly. And asked him for some twine to mend his hammock. It was given him—neither twine nor lanyard were seen again; but the next night an iron ball, closely netted, partly rolled from the pocket of the Lakemans monkey jacket, as he was tucking the coat into his hammock for a pillow. Twenty-four hours after, his trick at the silent helm—nigh to the man who was apt to doze over the grave always ready dug to the seaman&apos;s hand—that fatal hour was then to come; and in the\n
+            Do you think he wont do me a turn, when itpos to help himself in the end, shipmate and going to the mate, he looked at him quietly. And asked him for some twine to mend his hammock. It was given him—neither twine nor lanyard were seen again; but the next night an iron ball, closely netted, partly rolled from the pocket of the Lakemans monkey jacket, as he was tucking the coat into his hammock for a pillow. Twenty-four hours after, his trick at the silent helm—nigh to the man who was apt to doze over the grave always ready dug to the seaman&apos;s hand—that fatal hour was then to come; and in the "
+            android:textColor="#2d2d2d"
+            android:textSize="16sp" />
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/panoramaDetailBottomActionsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:paddingBottom="10dp" >
+
+        <ImageButton
+            android:id="@+id/panoramaDetailComoLlegarBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/button_comollegar" />
+
+        <ImageButton
+            android:id="@+id/panoramaDetailShareBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/panoramaDetailCommentsLayout"
+            android:background="@null"
+            android:src="@drawable/button_share" />
+
+        <ImageButton
+            android:id="@+id/panoramaDetailMusicBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/panoramaDetailComoLlegarBtn"
+            android:background="@null"
+            android:src="@drawable/button_music" />
+
+        <RelativeLayout
+            android:id="@+id/panoramaDetailCommentsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/panoramaDetailMusicBtn" >
+
+            <ImageButton
+                android:id="@+id/panoramaDetailCommentsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/button_comments" />
+
+            <TextView
+                android:id="@+id/panoramaDetailCommentsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp"
+                android:text="100"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fbfbfb" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

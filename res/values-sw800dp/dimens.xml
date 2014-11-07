@@ -1,0 +1,9 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+    <dimen name="facebook_btn_bottom">130dp</dimen>
+	<dimen name="margintop_greenbar">700dp</dimen>
+</resources>

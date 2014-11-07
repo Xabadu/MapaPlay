@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mapa Play</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_login">Login</string>
+    <string name="fb_login_button">Ingresa con Facebook</string>
+    <string name="title_activity_estados">Estados</string>
+    <string name="app_id">304930992971599</string>
+    <string name="title_activity_panoramas">Panoramas</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_panorama_detail">PanoramaDetail</string>
+    <string name="title_activity_como_llegar">ComoLlegar</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="comment_form_hint">Tu comentario</string>
+    <string name="estados_title_text">¿Cuál es tu \nánimo hoy?</string>
+    <string name="title_activity_mapa_panoramas">MapaPanoramas</string>
+    <string name="title_activity_musica">Musica</string>
+
+</resources>

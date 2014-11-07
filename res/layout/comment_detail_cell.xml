@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/comment_detail_bg" >
+
+    <RelativeLayout
+        android:id="@+id/commentDetailCellInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/commentDetailCellImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/batman" />
+
+        <TextView
+            android:id="@+id/commentDetailCellCommentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/commentDetailCellImage"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:text="Do you think he won&apos;t do me a turn, when it&apos;s to help himself in the end, shipmate?&apos;"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="#2d2d2d" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentDetailCellInfo"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/commentsByText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POR"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#2d2d2d"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commentDetailCellUserText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/commentsByText"
+            android:paddingLeft="3dp"
+            android:text="MACARENA GOLES"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/commentsDetailCellAgoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/commentDetailCellUserText"
+            android:paddingLeft="3dp"
+            android:text="-"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#a7a5a5"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/commentDetailCellDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/commentsDetailCellAgoText"
+            android:paddingLeft="3dp"
+            android:text="2 HORAS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#2d2d2d"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/musicDetailCellSeparatorImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/img_comments_separator" />
+
+</RelativeLayout>
