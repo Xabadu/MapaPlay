@@ -119,6 +119,16 @@ public class EstadosAdapter extends PagerAdapter {
 				iconWidth = 512;
 				iconHeight = 512;
 				 break;
+			
+			case DisplayMetrics.DENSITY_XXHIGH:
+				iconWidth = 768;
+				iconHeight = 768;
+				break;
+				
+			default:
+				iconWidth = 1024;
+				iconHeight = 1024;
+				break;
 		}
 		imageLoader.displayImage(imagenesEstados[position], icon, options, new ImageLoadingListener() {
 		    @Override
