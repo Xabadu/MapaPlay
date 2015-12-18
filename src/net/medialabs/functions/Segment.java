@@ -3,13 +3,10 @@ package net.medialabs.functions;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Segment {
-	/** Points in this segment. **/
+  
     private LatLng start;
-    /** Turn instruction to reach next segment. **/
     private String instruction;
-    /** Length of segment. **/
     private int length;
-    /** Distance covered. **/
     private double distance;
 
     /**
@@ -47,7 +44,7 @@ public class Segment {
             start = point;
     }
 
-    /** Get the starting point of this 
+    /** Get the starting point of this
      * segment.
      * @return a GeoPoint
      */

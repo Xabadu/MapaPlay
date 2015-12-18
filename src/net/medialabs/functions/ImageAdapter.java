@@ -29,7 +29,7 @@ public class ImageAdapter extends PagerAdapter {
 	DisplayImageOptions options;
 	private Integer[] GalImages = { R.drawable.img_teleferico, R.drawable.img_teleferico, R.drawable.img_teleferico };
 	private String[] PanoramaImages;
-	
+
 	public ImageAdapter(Context context, JSONArray images){
 		this.context = context;
 		this.images = images;
@@ -43,7 +43,6 @@ public class ImageAdapter extends PagerAdapter {
 			try {
 				PanoramaImages[i] = images.getString(i);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -57,12 +56,12 @@ public class ImageAdapter extends PagerAdapter {
 			return GalImages.length;
 		}
 	}
- 
+
 	@Override
 	public boolean isViewFromObject(View view, Object object) {
 		return view == ((RelativeLayout) object);
 	}
- 
+
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -70,7 +69,7 @@ public class ImageAdapter extends PagerAdapter {
 		final ImageView imageView = (ImageView) view.findViewById(R.id.panoramaDetailPagerImage);
 		imageView.setVisibility(View.INVISIBLE);
 		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		
+
 		if(PanoramaImages.length > 0) {
 			String fullURL = url + PanoramaImages[position];
 			Log.d("Url", fullURL);
@@ -97,7 +96,7 @@ public class ImageAdapter extends PagerAdapter {
 		((ViewPager) container).addView(view, 0);
 		return view;
 	}
- 
+
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		((ViewPager) container).removeView((RelativeLayout) object);

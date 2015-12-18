@@ -34,11 +34,11 @@ import android.widget.Toast;
 
 public class Splash extends Activity {
 
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 	}
 
@@ -47,9 +47,8 @@ public class Splash extends Activity {
     {
         super.onResume();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        // Obtain the sharedPreference, default to true if not available
         boolean isSplashEnabled = sp.getBoolean("isSplashEnabled", true);
-        
+
         if (isSplashEnabled) {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -62,12 +61,11 @@ public class Splash extends Activity {
             }, 1000);
         }
         else {
-            // if the splash is not enabled, then finish the activity immediately and go to main.
             Intent mainIntent = new Intent(Splash.this, Login.class);
             Splash.this.startActivity(mainIntent);
             finish();
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         }
-    }	
+    }
 
 }

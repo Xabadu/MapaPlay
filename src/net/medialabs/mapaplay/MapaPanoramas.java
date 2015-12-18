@@ -41,7 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClickListener {
-	
+
 	private GoogleMap map;
 	private UiSettings mapSettings;
 	private LatLng CURRENT_POSITION = new LatLng(-33.431864,-70.61514);
@@ -51,16 +51,16 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 	JSONArray resultArray = null;
 	Bitmap[] iconos;
 	boolean hide = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		if( (metrics.widthPixels == 240) || 
-				(metrics.widthPixels == 320)	|| 
-				(metrics.widthPixels == 480) || 
+		if( (metrics.widthPixels == 240) ||
+				(metrics.widthPixels == 320)	||
+				(metrics.widthPixels == 480) ||
 				(metrics.widthPixels == 720) ) {
 			getActionBar().hide();
 		} else {
@@ -69,9 +69,9 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 		}
 		ObtenerIconos obtenerIconos = new ObtenerIconos(this);
 		obtenerIconos.execute(intent.getStringExtra("data"));
-		
+
 	}
-	
+
 	public void loadMap(Bitmap[] markerIcons) {
 		setContentView(R.layout.activity_mapa_panoramas);
 		if(hide) {
@@ -83,9 +83,9 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 		if(map == null) {
 			map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.panoramasMap)).getMap();
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-			
+
 			Intent intent = getIntent();
-			
+
 			try {
 				resultArray = new JSONArray(intent.getStringExtra("data"));
 				for(int i = 0; i < resultArray.length(); i++) {
@@ -99,7 +99,7 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 						markerOptions.snippet(panoramaInfo.getString("direccion"));
 						markerOptions.position(markerPosition);
 						if(panoramaInfo.has("icono") && !panoramaInfo.isNull("icono")) {
-							if(panoramaInfo.getJSONObject("icono").has("imagen") && !panoramaInfo.getJSONObject("icono").isNull("imagen") && 
+							if(panoramaInfo.getJSONObject("icono").has("imagen") && !panoramaInfo.getJSONObject("icono").isNull("imagen") &&
 									!panoramaInfo.getJSONObject("icono").getString("imagen").equals("")) {
 								markerOptions.icon(BitmapDescriptorFactory.fromBitmap(markerIcons[0]));
 							}
@@ -122,20 +122,19 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 						markerOptions.snippet(panoramaInfo.getString("direccion"));
 						markerOptions.position(CURRENT_POSITION);
 						if(panoramaInfo.has("icono") && !panoramaInfo.isNull("icono")) {
-							if(panoramaInfo.getJSONObject("icono").has("imagen") && !panoramaInfo.getJSONObject("icono").isNull("imagen") && 
+							if(panoramaInfo.getJSONObject("icono").has("imagen") && !panoramaInfo.getJSONObject("icono").isNull("imagen") &&
 									!panoramaInfo.getJSONObject("icono").getString("imagen").equals("")) {
 								markerOptions.icon(BitmapDescriptorFactory.fromBitmap(markerIcons[i]));
 							}
 						}
 						map.addMarker(markerOptions);
 					}
-					
+
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			mapSettings = map.getUiSettings();
 			mapSettings.setCompassEnabled(false);
 			mapSettings.setZoomControlsEnabled(false);
@@ -144,7 +143,7 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 		} else {
 			Toast.makeText(this, "Noes", Toast.LENGTH_SHORT).show();
 		}
-		
+
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
@@ -154,10 +153,8 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 				try {
 					finalInfo = resultArray.getJSONObject(Integer.valueOf(numberMarker[1]));
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Intent previous = getIntent();
@@ -165,31 +162,30 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 				try {
 					intent.putExtra("id", finalInfo.getInt("id"));
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				intent.putExtra("estado", previous.getStringExtra("estado"));
 				startActivity(intent);
 			}
-			
+
 		});
-		
+
 		mapaBackBtn = (ImageButton) findViewById(R.id.mapaBackBtn);
 		mapaListBtn = (ImageButton) findViewById(R.id.mapaListListBtn);
-		
+
 		mapaBackBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				MapaPanoramas.this.finish();
 			}
 		});
-		
+
 		mapaListBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				MapaPanoramas.this.finish();
 			}
 		});
 	}
-	
+
 	@Override
     public void onBackPressed() {
 		MapaPanoramas.this.finish();
@@ -209,7 +205,7 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
             case android.R.id.home:
     			MapaPanoramas.this.finish();
             	return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -217,25 +213,24 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 
 	@Override
 	public void onInfoWindowClick(Marker arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private class ObtenerIconos extends AsyncTask<String, Void, Bitmap[]> {
-		
+
 		ProgressDialog dialog;
 		MapaPanoramas activityRef;
-		
+
 		public ObtenerIconos(MapaPanoramas activityRef) {
 			this.activityRef = activityRef;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			dialog = ProgressDialog.show(MapaPanoramas.this, "", "Cargando...", true);
 		}
-		
+
 		@Override
 		protected Bitmap[] doInBackground(String... params) {
 			try {
@@ -254,22 +249,19 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 					}
 				}
 			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				return null;
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			}
 			return iconos;
-			
+
 		}
-		
+
 		@Override
 		protected void onPostExecute(Bitmap[] icons) {
 			super.onPostExecute(icons);
@@ -277,9 +269,9 @@ public class MapaPanoramas extends FragmentActivity implements OnInfoWindowClick
 			if(icons != null) {
 				activityRef.loadMap(icons);
 			}
-			
+
 		}
-		
+
 	}
 
 }

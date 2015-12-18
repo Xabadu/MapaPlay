@@ -19,7 +19,7 @@ public class Routing extends AsyncTask<LatLng,Void,Route> {
 
 	public Routing(Context context,GoogleMap map,int color)
 	{
-		
+
 		this.context = context;
 		this.map = map;
 		this.color = color;
@@ -51,17 +51,17 @@ public class Routing extends AsyncTask<LatLng,Void,Route> {
 	    return r;
 	}
 	@Override
-	protected synchronized void onPreExecute() 
-	{ 
+	protected synchronized void onPreExecute()
+	{
 		if(!check)
 		spinner = ProgressDialog.show(context,"","Loading...", true,false);
-	}//end onPreExecute method
-	
-	protected void onPostExecute(Route result) 
+	}
+
+	protected void onPostExecute(Route result)
 	{
 		if(!check)
 		spinner.dismiss();
-		
+
         if(result==null)
         {
         	Log.e(null,"No result");
@@ -77,7 +77,6 @@ public class Routing extends AsyncTask<LatLng,Void,Route> {
 
             map.addPolyline(options);
 
-            // invalidate?
         }
-     }//end onPostExecute method
+     }
 }

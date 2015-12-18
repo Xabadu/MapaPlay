@@ -41,7 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class ComoLlegar extends FragmentActivity implements 
+public class ComoLlegar extends FragmentActivity implements
 GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener {
 
@@ -51,29 +51,29 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	private UiSettings mapSettings;
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private LatLng NEW_POSITION;
-	
+
 	ImageButton comoLlegarBackBtn;
 	boolean hide = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		if( (metrics.widthPixels == 240) || 
-				(metrics.widthPixels == 320)	|| 
-				(metrics.widthPixels == 480) || 
+		if( (metrics.widthPixels == 240) ||
+				(metrics.widthPixels == 320)	||
+				(metrics.widthPixels == 480) ||
 				(metrics.widthPixels == 720) ) {
 			getActionBar().hide();
 		} else {
 			hide = true;
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		mLocationClient = new LocationClient(this, this, this);	
-		
-		
+		mLocationClient = new LocationClient(this, this, this);
+
+
 	}
-	
+
 	public void loadMap() {
 		setContentView(R.layout.activity_como_llegar);
 		if(hide) {
@@ -83,7 +83,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 			backBtn.setVisibility(View.GONE);
 		}
 		mCurrentLocation = mLocationClient.getLastLocation();
-		if(mCurrentLocation != null) { 
+		if(mCurrentLocation != null) {
 			LatLng CURRENT_POSITION = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 			if(map == null) {
 				map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.comoLlegarMap)).getMap();
@@ -94,7 +94,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(CURRENT_POSITION, 16));
 				map.addMarker(new MarkerOptions()
 				.position(CURRENT_POSITION));
-				
+
 				Intent intent = getIntent();
 				try {
 					JSONObject panoramaInfo = new JSONObject(intent.getStringExtra("data"));
@@ -122,36 +122,32 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 						.title(panoramaInfo.getString("nombre"))
 						.snippet(panoramaInfo.getString("direccion")));
 					}
-					
-					//GetRoute getRoute = new GetRoute();
-					//getRoute.execute(Double.toString(CURRENT_POSITION.latitude), Double.toString(CURRENT_POSITION.longitude),
-							//Double.toString(NEW_POSITION.latitude), Double.toString(NEW_POSITION.longitude));
+
 					new Routing(ComoLlegar.this,map,
-							Color.GREEN).execute(new LatLng(CURRENT_POSITION.latitude, CURRENT_POSITION.longitude), 
+							Color.GREEN).execute(new LatLng(CURRENT_POSITION.latitude, CURRENT_POSITION.longitude),
 							new LatLng(NEW_POSITION.latitude, NEW_POSITION.longitude));
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 
 			}
 		}
-		
+
 		comoLlegarBackBtn = (ImageButton) findViewById(R.id.comoLlegarBackBtn);
-		
+
 		comoLlegarBackBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				ComoLlegar.this.finish();
 			}
 		});
 	}
-	
+
 	@Override
     public void onBackPressed() {
 		ComoLlegar.this.finish();
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa_panoramas, menu);
@@ -165,31 +161,30 @@ GooglePlayServicesClient.OnConnectionFailedListener {
             case android.R.id.home:
     			ComoLlegar.this.finish();
             	return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-	
+
 	@Override
     protected void onStart() {
         super.onStart();
-        // Connect the client.
         mLocationClient.connect();
     }
-	
+
 	@Override
     protected void onStop() {
         mLocationClient.disconnect();
         super.onStop();
     }
-	
+
 	@Override
 	public void onDisconnected() {
 		Toast.makeText(this, "Desconectado. Por favor reconectar.", Toast.LENGTH_SHORT).show();
 		this.finish();
 	}
-	
+
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
 
@@ -211,22 +206,22 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 			loadMap();
 		}
 	}
-	
-	
+
+
 	private class GetRoute extends AsyncTask<String, Void, String> {
-		
+
 		private ProgressDialog dialog;
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			dialog = ProgressDialog.show(ComoLlegar.this, "", "Cargando ruta...", true);
 		}
-		
+
 		@Override
 		protected String doInBackground(String... params) {
 			HttpClient client = new DefaultHttpClient();
-			HttpGet get = new HttpGet("http://maps.googleapis.com/maps/api/directions/json?origin=" 
+			HttpGet get = new HttpGet("http://maps.googleapis.com/maps/api/directions/json?origin="
 			+ params[0] +"," + params[1] + "&destination=" + params[2] + "," + params[3] +"&sensor=true&mode=walking");
             get.setHeader("content-type", "application/json");
             try {
@@ -234,15 +229,14 @@ GooglePlayServicesClient.OnConnectionFailedListener {
             	String respStr = EntityUtils.toString(resp.getEntity());
             	return respStr;
           	} catch(Exception e) {
-            	Log.d("Entra al catch", e.toString());
+            	Log.d("Error: ", e.toString());
             }
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			Log.d("Resultado", result);
 			JSONObject routeObject;
 			try {
 				routeObject = new JSONObject(result);
@@ -262,17 +256,16 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 						lineOptions.geodesic(true);
 						map.addPolyline(lineOptions);
 					}
-					
+
 				}
-				
+
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			dialog.dismiss();
 		}
-		
+
 	}
-	
+
 }

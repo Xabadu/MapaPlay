@@ -6,14 +6,11 @@ import android.net.NetworkInfo;
 
 public class ConectivityTools {
 	private Context _context;
-	 
+
     public ConectivityTools(Context context){
         this._context = context;
     }
- 
-    /**
-     * Checking for all possible internet providers
-     * **/
+		
     public boolean isConnectingToInternet(){
         ConnectivityManager connectivity = (ConnectivityManager) _context.getSystemService(Context.CONNECTIVITY_SERVICE);
           if (connectivity != null)
@@ -25,7 +22,7 @@ public class ConectivityTools {
                       {
                           return true;
                       }
- 
+
           }
           return false;
     }

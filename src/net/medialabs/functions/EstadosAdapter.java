@@ -45,17 +45,16 @@ public class EstadosAdapter extends PagerAdapter {
 		imagenesEstados = new String[infoEstados.length()];
 		tituloEstados = new String[infoEstados.length()];
 		idsEstados = new Integer[infoEstados.length()];
-				
+
 		for(int i = 0; i < infoEstados.length(); i++) {
 			JSONObject objEstados;
 			try {
 				objEstados = infoEstados.getJSONObject(i);
-				JSONObject objEmocion = objEstados.getJSONObject("emocion"); 
+				JSONObject objEmocion = objEstados.getJSONObject("emocion");
 				imagenesEstados[i] = "http://play.medialabs.net" + objEmocion.getString("imagen");
 				tituloEstados[i] = objEmocion.getString("name");
 				idsEstados[i] = objEmocion.getInt("id");
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -71,15 +70,15 @@ public class EstadosAdapter extends PagerAdapter {
 	public int getCount() {
 		return infoEstados.length();
 	}
- 
+
 	@Override
 	public boolean isViewFromObject(View view, Object object) {
 		return view == ((RelativeLayout) object);
 	}
- 
+
 	@Override
 	public Object instantiateItem(ViewGroup container, final int position) {
-		
+
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.estado_detail_page, null);
 		final TextView title = (TextView) view.findViewById(R.id.commentsByText);
@@ -89,8 +88,8 @@ public class EstadosAdapter extends PagerAdapter {
 		icon.setVisibility(View.INVISIBLE);
 		title.setVisibility(View.INVISIBLE);
 		title.setText(tituloEstados[position]);
-		
-		
+
+
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		((Estados) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
@@ -119,12 +118,12 @@ public class EstadosAdapter extends PagerAdapter {
 				iconWidth = 512;
 				iconHeight = 512;
 				 break;
-			
+
 			case DisplayMetrics.DENSITY_XXHIGH:
 				iconWidth = 768;
 				iconHeight = 768;
 				break;
-				
+
 			default:
 				iconWidth = 1024;
 				iconHeight = 1024;
@@ -136,7 +135,7 @@ public class EstadosAdapter extends PagerAdapter {
 		    }
 		    @Override
 		    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-		       
+
 		    }
 		    @Override
 		    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -152,17 +151,17 @@ public class EstadosAdapter extends PagerAdapter {
 		icon.getLayoutParams().width = iconHeight;
 		Typeface tf = Typeface.createFromAsset(context.getAssets(), fontPath);
 		title.setTypeface(tf);
-		
+
 		icon.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				((Estados) context).startPanoramas(idsEstados[position]);
 			}
 		});
-		
+
 		((ViewPager) container).addView(view, 0);
 		return view;
 	}
- 
+
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		((ViewPager) container).removeView((RelativeLayout) object);

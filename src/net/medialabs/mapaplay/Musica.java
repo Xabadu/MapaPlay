@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 public class Musica extends Activity {
-	
+
 	ImageButton musicTopBarCloseBtn;
 	ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
 	ListView musicList;
@@ -37,9 +37,9 @@ public class Musica extends Activity {
 		super.onCreate(savedInstanceState);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		if( (metrics.widthPixels == 240) || 
-				(metrics.widthPixels == 320)	|| 
-				(metrics.widthPixels == 480) || 
+		if( (metrics.widthPixels == 240) ||
+				(metrics.widthPixels == 320)	||
+				(metrics.widthPixels == 480) ||
 				(metrics.widthPixels == 720) ) {
 			getActionBar().hide();
 		} else {
@@ -54,14 +54,14 @@ public class Musica extends Activity {
 			backBtn.setVisibility(View.GONE);
 		}
 		musicTopBarCloseBtn = (ImageButton) findViewById(R.id.musicTopBarCloseBtn);
-		
+
 		Intent intent = getIntent();
-		
+
 		String data = intent.getStringExtra("data");
 		try {
 			JSONObject panorama = new JSONObject(data);
 			final JSONArray canciones = panorama.getJSONArray("canciones");
-			
+
 			for(int i = 0; i < canciones.length(); i++) {
 				JSONObject songInfo = canciones.getJSONObject(i);
 				HashMap<String, String> songHashMap = new HashMap<String, String>();
@@ -69,11 +69,11 @@ public class Musica extends Activity {
 				songHashMap.put("image", "http://play.medialabs.net" + songInfo.getString("caratula"));
 				songsList.add(songHashMap);
 			}
-			
+
 			musicList = (ListView) findViewById(R.id.musicList);
 			adapter = new MusicAdapter(this, songsList);
 			musicList.setAdapter(adapter);
-			
+
 			musicList.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -86,31 +86,29 @@ public class Musica extends Activity {
 	    				intent.setData(Uri.parse(url));
 	    				startActivity(intent);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				
+
 			});
-			
+
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		musicTopBarCloseBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Musica.this.finish();
 			}
 		});
-		
+
 	}
-	
+
 	@Override
     public void onBackPressed() {
 		Musica.this.finish();
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa_panoramas, menu);
@@ -124,7 +122,7 @@ public class Musica extends Activity {
             case android.R.id.home:
     			Musica.this.finish();
             	return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }

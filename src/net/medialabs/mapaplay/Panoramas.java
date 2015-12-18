@@ -41,15 +41,15 @@ public class Panoramas extends Activity {
 	ImageButton panoramasMapBtn;
 	JSONArray panoramaArray = null;
 	boolean hide = false;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		if( (metrics.widthPixels == 240) || 
-				(metrics.widthPixels == 320)	|| 
-				(metrics.widthPixels == 480) || 
+		if( (metrics.widthPixels == 240) ||
+				(metrics.widthPixels == 320)	||
+				(metrics.widthPixels == 480) ||
 				(metrics.widthPixels == 720) ) {
 			getActionBar().hide();
 		} else {
@@ -68,13 +68,13 @@ public class Panoramas extends Activity {
 		obtenerPanoramas panoramas = new obtenerPanoramas(this);
 		panoramas.execute(estado);
 	}
-	
+
 	public void listarPanoramas(final String result) {
 		Log.d("Resultado", result);
 		ArrayList<HashMap<String, String>> panoramasList = new ArrayList<HashMap<String, String>>();
-		
-		
-		
+
+
+
 		try {
 			panoramaArray = new JSONArray(result);
 			for(int i = 0; i < panoramaArray.length(); i++) {
@@ -87,7 +87,7 @@ public class Panoramas extends Activity {
 				panoramaInfo.put("ranking", Integer.toString(panoramaObject.getInt("ranking")));
 				panoramaInfo.put("value", panoramaObject.getString("precio_desde"));
 				panoramaInfo.put("image", panoramaObject.getString("image"));
-				
+
 				if(panoramaObject.has("precio_desde") && panoramaObject.has("precio_hasta")) {
 					panoramaInfo.put("price_mod", "range");
 					panoramaInfo.put("price_start", panoramaObject.getString("precio_desde"));
@@ -99,7 +99,7 @@ public class Panoramas extends Activity {
 						panoramaInfo.put("price_mod", "unique");
 						panoramaInfo.put("price", panoramaObject.getString("precio_desde"));
 					}
-					
+
 				} else if(!panoramaObject.has("precio_desde") && panoramaObject.has("precio_hasta")) {
 					if(panoramaObject.getString("precio_hasta").equalsIgnoreCase("0")) {
 						panoramaInfo.put("price_mod", "free");
@@ -110,23 +110,22 @@ public class Panoramas extends Activity {
 				} else if(!panoramaObject.has("precio_desde") && !panoramaObject.has("precio_hasta")) {
 					panoramaInfo.put("price_mod", "free");
 				}
-				
+
 				panoramasList.add(panoramaInfo);
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
-		
-		
+		}
+
+
+
 		list = (ListView) findViewById(R.id.musicList);
-		
+
 		adapter = new PanoramaAdapter(this, panoramasList);
 		Log.d("ARRAYLIST", panoramasList.toString());
 		list.setAdapter(adapter);
-		
-		
+
+
 		list.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -138,21 +137,20 @@ public class Panoramas extends Activity {
 	            	intent.putExtra("estado", estado);
 	            	startActivity(intent);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
         });
-		
+
 		panoramasBackBtn = (ImageButton) findViewById(R.id.panoramasBackBtn);
 		panoramasMapBtn = (ImageButton) findViewById(R.id.mapaMapBtn);
-		
+
 		panoramasBackBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Panoramas.this.finish();
 			}
 		});
-		
+
 		panoramasMapBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(Panoramas.this, MapaPanoramas.class);
@@ -161,16 +159,16 @@ public class Panoramas extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 	}
-	
+
 	@Override
     public void onBackPressed() {
 		Intent intent = new Intent(Panoramas.this, Estados.class);
 		startActivity(intent);
 		Panoramas.this.finish();
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa_panoramas, menu);
@@ -184,32 +182,32 @@ public class Panoramas extends Activity {
             case android.R.id.home:
     			Panoramas.this.finish();
             	return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-	
-	
+
+
 	private class obtenerPanoramas extends AsyncTask<Integer, Integer, String> {
-		
+
 		private ProgressDialog dialog;
 		private Panoramas activityRef;
-		
+
 		public obtenerPanoramas(Panoramas activityRef) {
 			this.activityRef = activityRef;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 		    dialog = ProgressDialog.show(Panoramas.this, "", "Cargando panoramas...", true);
-		    
+
 		}
-		
+
 		@Override
 		protected String doInBackground(Integer... params) {
-		    
+
 			HttpClient client = new DefaultHttpClient();
 			HttpGet get = new HttpGet("http://play.medialabs.net/panoramas/" + Integer.toString(params[0])+ ".json");
             get.setHeader("content-type", "application/json");
@@ -222,21 +220,20 @@ public class Panoramas extends Activity {
             }
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			if(result != null) {
-				activityRef.listarPanoramas(result);			
+				activityRef.listarPanoramas(result);
 				dialog.dismiss();
 			} else {
-				Log.d("Error en Post", "Error en post");
 				dialog.dismiss();
 			}
-			
-			
+
+
 		}
-		
+
 	}
 
 

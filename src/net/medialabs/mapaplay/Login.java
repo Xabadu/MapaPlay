@@ -64,46 +64,46 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 
 public class Login extends Activity {
-	
+
 	// Progress dialog
     ProgressDialog pDialog;
- 
+
     // Shared Preferences
     private static SharedPreferences mSharedPreferences;
-    
+
     // Custom utilities
     private ConectivityTools ct;
     private AlertDialogs alert = new AlertDialogs();
-    
+
     // UI Elements
     ImageButton fbLoginBtn;
-    
+
     // Facebook elements
-    private static final List<String> READ_PERMISSIONS = Arrays.asList("email", "user_likes", "user_hometown", "user_about_me", 
+    private static final List<String> READ_PERMISSIONS = Arrays.asList("email", "user_likes", "user_hometown", "user_about_me",
     		"user_birthday", "user_interests");
 
     @SuppressLint("NewApi")
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+
 		if (Build.VERSION.SDK_INT > 9) {
         	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         	StrictMode.setThreadPolicy(policy);
         }
 
 		ct = new ConectivityTools(getApplicationContext());
-		 
+
         if (!ct.isConnectingToInternet()) {
-            alert.showAlertDialog(Login.this, "Error de Conexi—n",
-                    "Esta aplicaci—n necesita una conexi—n a Internet para funcionar.", false);
+            alert.showAlertDialog(Login.this, "Error de Conexiï¿½n",
+                    "Esta aplicaciï¿½n necesita una conexiï¿½n a Internet para funcionar.", false);
             return;
         }
-		
+
         mSharedPreferences = getApplicationContext().getSharedPreferences(
                 "PlayFMPreferences", 0);
-        
+
         if(Session.openActiveSessionFromCache(this) != null) {
         	Intent intent = new Intent(this, Estados.class);
         	startActivity(intent);
@@ -114,7 +114,7 @@ public class Login extends Activity {
           	fbLoginBtn.startAnimation(animationFadeIn);
            	try {
            	    PackageInfo info = getPackageManager().getPackageInfo(
-           	            "net.medialabs.mapaplay", 
+           	            "net.medialabs.mapaplay",
            	            PackageManager.GET_SIGNATURES);
            	    for (Signature signature : info.signatures) {
            	        MessageDigest md = MessageDigest.getInstance("SHA");
@@ -128,18 +128,18 @@ public class Login extends Activity {
            	}
         }
 	}
-	
+
 	public void loginFacebook(View view) {
-	
+
 		pDialog = ProgressDialog.show(Login.this, "",
                 "Un momento...");
-		    	
+
 		openActiveSession(Login.this, true, new Session.StatusCallback() {
 
 			@Override
 			public void call(Session session, SessionState state, Exception exception) {
 				if (state.isOpened()) {
-					
+
 				    Request.Callback callback = new Request.Callback() {
 
 				        @Override
@@ -159,24 +159,24 @@ public class Login extends Activity {
 				    Request request = new Request(session, "me", params, HttpMethod.GET, callback);
 				    RequestAsyncTask task = new RequestAsyncTask(request);
 				    task.execute();
-					
+
 				}
 				if(state.isClosed()) {
 					pDialog.dismiss();
 					Log.d("error", state.toString());
-					Toast.makeText(Login.this, "Autentificaci—n cancelada", Toast.LENGTH_SHORT).show();
+					Toast.makeText(Login.this, "Autentificaciï¿½n cancelada", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}, READ_PERMISSIONS);
-		
+
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	  super.onActivityResult(requestCode, resultCode, data);
 	  Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 	}
-	
+
 	private static Session openActiveSession(Activity activity, boolean allowLoginUI, StatusCallback callback, List<String> permissions) {
 	    OpenRequest openRequest = new OpenRequest(activity).setPermissions(permissions).setCallback(callback);
 	    Session session = new Builder(activity).build();
@@ -187,26 +187,26 @@ public class Login extends Activity {
 	    }
 	    return null;
 	}
-	
-	
-	
+
+
+
 	private class UpdateUser extends AsyncTask<JSONObject, Void, String> {
-		
+
 		String picture = "";
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = ProgressDialog.show(Login.this, "", "Validando...", true);
 		}
-		
+
 		@Override
 		protected String doInBackground(JSONObject... params) {
 			HttpClient client = new DefaultHttpClient();
-            
+
             HttpPost post = new HttpPost("http://play.medialabs.net/usuario/update.json");
             post.setHeader("content-type", "application/json");
-            
+
             JSONObject usuario = new JSONObject();
             try {
 				if(params[0].has("picture") && !params[0].isNull("picture")) {
@@ -217,20 +217,19 @@ public class Login extends Activity {
 							picture = picData.getString("url");
 						}
 					}
-					
+
 				}
-            	
+
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            
+
             try {
-        				                					                	
+
 				usuario.put("fb_id", params[0].getString("id"));
 				if(params[0].has("first_name") && !params[0].getString("first_name").equals("")) {
 					usuario.put("first_name", params[0].getString("first_name"));
-				} 
+				}
 				if(params[0].has("middle_name") && !params[0].getString("middle_name").equals("")) {
 					usuario.put("middle_name", params[0].getString("middle_name"));
 				}
@@ -270,41 +269,41 @@ public class Login extends Activity {
 				if(params[0].has("likes")) {
 				}
 				usuario.put("avatar", params[0].getJSONObject("picture").getJSONObject("data").getString("url"));
-				
-				
-				
+
+
+
 				try {
 					StringEntity entity = new StringEntity(usuario.toString(), HTTP.UTF_8);
 					post.setEntity(entity);
 				} catch (UnsupportedEncodingException e1) {
 						e1.printStackTrace();
 				}
-					
+
 				try {
 					HttpResponse resp = client.execute(post);
 					return EntityUtils.toString(resp.getEntity());
-					
+
 				} catch (ClientProtocolException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-				
-					
+
+
+
 			} catch (JSONException e1) {
 				e1.printStackTrace();
 			}
-            
+
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			try {
 				JSONObject userInfo = new JSONObject(result);
-				Editor e = mSharedPreferences.edit();					               
+				Editor e = mSharedPreferences.edit();
 	            e.putInt("USER_ID", userInfo.getInt("id"));
 	            e.putInt("FB_ID", userInfo.getInt("fb_id"));
 	            e.putString("USER_FIRSTNAME", userInfo.getString("first_name"));
@@ -312,7 +311,7 @@ public class Login extends Activity {
 	            e.putString("USER_EMAIL", userInfo.getString("email"));
 	            e.putString("USER_AVATAR", picture);
 	            e.commit();
-	            
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -325,4 +324,3 @@ public class Login extends Activity {
 	}
 
 }
-

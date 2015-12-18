@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class XMLParser {
-	// names of the XML tags
+
     protected static final String MARKERS = "markers";
     protected static final String MARKER = "marker";
 
@@ -16,7 +16,6 @@ public class XMLParser {
             try {
                     this.feedUrl = new URL(feedUrl);
             } catch (MalformedURLException e) {
-                    //Log.e(e.getMessage(), "XML parser - " + feedUrl);
             }
     }
 
@@ -24,7 +23,6 @@ public class XMLParser {
             try {
                     return feedUrl.openConnection().getInputStream();
             } catch (IOException e) {
-                    //Log.e(e.getMessage(), "XML parser - " + feedUrl);
                     return null;
             }
     }

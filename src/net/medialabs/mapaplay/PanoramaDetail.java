@@ -48,7 +48,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 
 public class PanoramaDetail extends Activity {
-	
+
 	ImageButton panoramaDetailBackBtn;
 	ImageButton panoramaDetailComoLlegarBtn;
 	ImageButton panoramaDetailCommentsBtn;
@@ -60,25 +60,25 @@ public class PanoramaDetail extends Activity {
 	TextView panoramaDetailHours;
 	TextView panoramaDetailDescription;
 	TextView panoramaDetailCommentsText;
-	
+
 	int panorama;
 	int ranking;
 	int usuario;
-	
+
 	SharedPreferences mSharedPreferences;
-	
+
 	String proximaNovaLight = "fonts/ProximaNova-Light.otf";
 	String proximaNovaRegular = "fonts/ProximaNova-Regular.otf";
 	boolean hide = false;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		if( (metrics.widthPixels == 240) || 
-				(metrics.widthPixels == 320)	|| 
-				(metrics.widthPixels == 480) || 
+		if( (metrics.widthPixels == 240) ||
+				(metrics.widthPixels == 320)	||
+				(metrics.widthPixels == 480) ||
 				(metrics.widthPixels == 720) ) {
 			getActionBar().hide();
 		} else {
@@ -93,10 +93,10 @@ public class PanoramaDetail extends Activity {
 	    DetallePanorama detallePanorama = new DetallePanorama(this);
 	    detallePanorama.execute(intent.getIntExtra("id", 0));
 	}
-	
+
 	public void cargarPanorama(final String data) {
 		setContentView(R.layout.activity_panorama_detail);
-		
+
 	    panoramaDetailBackBtn = (ImageButton) findViewById(R.id.panoramaDetailBackBtn);
 	    panoramaDetailComoLlegarBtn = (ImageButton) findViewById(R.id.panoramaDetailComoLlegarBtn);
 	    panoramaDetailCommentsBtn = (ImageButton) findViewById(R.id.panoramaDetailCommentsBtn);
@@ -113,13 +113,13 @@ public class PanoramaDetail extends Activity {
 			statusBar.setVisibility(View.GONE);
 			panoramaDetailBackBtn.setVisibility(View.GONE);
 		}
-	    
+
 	    ViewPager viewPager = (ViewPager) findViewById(R.id.panoramaDetailPicturesViewPager);
 	    CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.panoramaDetailCircleIndicator);
-	    
+
 	    Typeface tfLight = Typeface.createFromAsset(getAssets(), proximaNovaLight);
 		Typeface tfRegular = Typeface.createFromAsset(getAssets(), proximaNovaRegular);
-	    
+
 	    try {
 			JSONObject panoramaInfo = new JSONObject(data);
 			panoramaDetailTitle.setText(panoramaInfo.getString("nombre"));
@@ -155,7 +155,7 @@ public class PanoramaDetail extends Activity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	    
+
 	    panoramaDetailRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 	    	public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 	    		ranking = (int) rating;
@@ -163,13 +163,13 @@ public class PanoramaDetail extends Activity {
 	    		rankingPanorama.execute(panorama, usuario, ranking);
 	    	}
 	    });
-	    
+
 	    panoramaDetailBackBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		PanoramaDetail.this.finish();
 	    	}
 	    });
-	    
+
 	    panoramaDetailComoLlegarBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Intent intent = new Intent(PanoramaDetail.this, ComoLlegar.class);
@@ -179,7 +179,7 @@ public class PanoramaDetail extends Activity {
 	    		startActivity(intent);
 	    	}
 	    });
-	    
+
 	    panoramaDetailMusicBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Intent intent = new Intent(PanoramaDetail.this, Musica.class);
@@ -187,7 +187,7 @@ public class PanoramaDetail extends Activity {
 	    		startActivity(intent);
 	    	}
 	    });
-	    
+
 	    panoramaDetailCommentsBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Intent intent = new Intent(PanoramaDetail.this, Comments.class);
@@ -196,7 +196,7 @@ public class PanoramaDetail extends Activity {
 	    		startActivity(intent);
 	    	}
 	    });
-	    
+
 	    panoramaDetailShareBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		JSONObject compartirInfo;
@@ -208,11 +208,11 @@ public class PanoramaDetail extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	    		
+
 	    	}
 	    });
 	}
-	
+
 	public void compartirPanorama(String nombre, String direccion, String descripcion) {
 
 		Bundle params = new Bundle();
@@ -232,28 +232,24 @@ public class PanoramaDetail extends Activity {
 	            public void onComplete(Bundle values,
 	                FacebookException error) {
 	                if (error == null) {
-	                    // When the story is posted, echo the success
-	                    // and the post Id.
+
 	                    final String postId = values.getString("post_id");
 	                    if (postId != null) {
 	                        Toast.makeText(PanoramaDetail.this,
 	                            "Has compartido un panorama de Mapa Play con tus amigos",
 	                            Toast.LENGTH_SHORT).show();
 	                    } else {
-	                        // User clicked the Cancel button
-	                        Toast.makeText(PanoramaDetail.this, 
-	                            "Cancelado", 
+	                        Toast.makeText(PanoramaDetail.this,
+	                            "Cancelado",
 	                            Toast.LENGTH_SHORT).show();
 	                    }
 	                } else if (error instanceof FacebookOperationCanceledException) {
-	                    // User clicked the "x" button
-	                    Toast.makeText(PanoramaDetail.this, 
-	                        "Cancelado", 
+	                    Toast.makeText(PanoramaDetail.this,
+	                        "Cancelado",
 	                        Toast.LENGTH_SHORT).show();
 	                } else {
-	                    // Generic, ex: network error
-	                    Toast.makeText(PanoramaDetail.this, 
-	                        "Error, intŽntalo nuevamente", 
+	                    Toast.makeText(PanoramaDetail.this,
+	                        "Error, intï¿½ntalo nuevamente",
 	                        Toast.LENGTH_SHORT).show();
 	                }
 	            }
@@ -262,7 +258,7 @@ public class PanoramaDetail extends Activity {
 	        .build();
 	    feedDialog.show();
 	}
-	
+
 	@Override
     public void onBackPressed() {
 		Intent intent = new Intent(PanoramaDetail.this, Panoramas.class);
@@ -271,7 +267,7 @@ public class PanoramaDetail extends Activity {
 		startActivity(intent);
 		PanoramaDetail.this.finish();
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa_panoramas, menu);
@@ -285,27 +281,27 @@ public class PanoramaDetail extends Activity {
             case android.R.id.home:
     			PanoramaDetail.this.finish();
             	return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-	
+
 	private class DetallePanorama extends AsyncTask<Integer, Void, String> {
-		
+
 		private ProgressDialog dialog;
 		private PanoramaDetail activityRef;
-		
+
 		public DetallePanorama(PanoramaDetail activityRef) {
 			this.activityRef = activityRef;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			dialog = ProgressDialog.show(PanoramaDetail.this, "", "Cargando...", true);
 		}
-		
+
 		@Override
 		protected String doInBackground(Integer... params) {
 			HttpClient client = new DefaultHttpClient();
@@ -320,7 +316,7 @@ public class PanoramaDetail extends Activity {
             }
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
@@ -328,46 +324,45 @@ public class PanoramaDetail extends Activity {
 			Log.d("Resultado", result);
 			activityRef.cargarPanorama(result);
 		}
-		
+
 	}
-	
+
 	private class RankingPanorama extends AsyncTask<Integer, Void, String> {
-		
+
 		ProgressDialog dialog;
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			dialog = ProgressDialog.show(PanoramaDetail.this, "", "Enviando voto...", true);
 		}
-		
+
 		@Override
 		protected String doInBackground(Integer... params) {
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost("http://play.medialabs.net/ranking.json");
             post.setHeader("content-type", "application/json");
-            
+
             JSONObject ranking = new JSONObject();
 			try {
 				ranking.put("panorama", params[0]);
 				ranking.put("usuario", params[1]);
 				ranking.put("valor", params[2]);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			try {
 				StringEntity entity = new StringEntity(ranking.toString(), HTTP.UTF_8);
 				post.setEntity(entity);
 			} catch (UnsupportedEncodingException e1) {
 					e1.printStackTrace();
 			}
-				
+
 			try {
 				HttpResponse resp = client.execute(post);
 				return EntityUtils.toString(resp.getEntity());
-				
+
 			} catch (ClientProtocolException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -375,7 +370,7 @@ public class PanoramaDetail extends Activity {
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
@@ -385,12 +380,11 @@ public class PanoramaDetail extends Activity {
 				int valor = resultado.getInt("ranking");
 				panoramaDetailRatingBar.setProgress(valor);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			dialog.dismiss();
 		}
-		
+
 	}
-	
+
 }
